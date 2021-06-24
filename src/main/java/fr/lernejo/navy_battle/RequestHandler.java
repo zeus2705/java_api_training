@@ -9,14 +9,16 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 
 public class RequestHandler {
+
     final MyServer server;
     final JSON_Check jsck;
-    RequestHandler(MyServer s) throws IOException {
+
+    RequestHandler(MyServer s){
         server = s;
         jsck = new JSON_Check();
     }
 
-    static String GetBodyRequest(HttpExchange exchange) throws IOException {
+     String GetBodyRequest(HttpExchange exchange) throws IOException {
         InputStreamReader isr =  new InputStreamReader(exchange.getRequestBody(),"utf-8");
         BufferedReader br = new BufferedReader(isr);
         int b;
@@ -33,7 +35,7 @@ public class RequestHandler {
     public String StartHandler(HttpExchange exchange) throws IOException {
         try {
             String body = GetBodyRequest(exchange);
-            if (!jsck.ValidateStartRequest(body)) {new Exception();}
+            jsck.ValidateStartRequest(body);
         } catch (Exception e) {
             server.generatcatHtml(exchange, 400);
             return "";

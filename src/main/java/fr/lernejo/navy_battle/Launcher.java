@@ -19,10 +19,8 @@ public class Launcher {
                 ClientHttp client = new ClientHttp(server, args[1]);
                 client.ConnectToServer();
             }
-        } catch (IOException | URISyntaxException | IndexOutOfBoundsException e) {
-            e.printStackTrace();
-            System.out.println(String.format("Something Went terribly wrong"));
-            return;
+        } catch (IOException | URISyntaxException e) {
+            throw e;
         }
     }
 }

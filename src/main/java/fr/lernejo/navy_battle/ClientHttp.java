@@ -10,8 +10,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class ClientHttp {
+
     final MyServer server;
     final String url;
+
     ClientHttp(MyServer s, String url) throws URISyntaxException {
         server = s;
         UrlValidator urlValidator = new UrlValidator();
@@ -20,8 +22,7 @@ public class ClientHttp {
     }
 
 
-    public boolean ConnectToServer()
-    {
+    public boolean ConnectToServer() throws URISyntaxException, IOException, InterruptedException {
         try {
             HttpClient cli =HttpClient.newHttpClient();
             HttpRequest requetePost = HttpRequest.newBuilder()
@@ -32,8 +33,7 @@ public class ClientHttp {
                 .build();
             HttpResponse<String> response = cli.send(requetePost, HttpResponse.BodyHandlers.ofString());
         } catch (URISyntaxException | InterruptedException | IOException e) {
-            e.printStackTrace();
-            return false;
+            throw e;
         }
         return true;
     }

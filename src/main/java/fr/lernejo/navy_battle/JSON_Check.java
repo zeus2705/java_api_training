@@ -13,11 +13,7 @@ public class JSON_Check {
 
     public Boolean ValidateStartRequest(String Request)
     {
-        try {
-            startrequestschema.validate(new JSONObject(Request));
-            return true;
-        } catch (JSONException e) {
-            return false;
-        }
+        startrequestschema.validate(new JSONObject(Request));
+        return true;
     }
 }
