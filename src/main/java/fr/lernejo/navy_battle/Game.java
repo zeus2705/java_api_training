@@ -49,9 +49,5 @@ public class Game {
         int[] coord = shoot.GetCellToShoot();
         coord[0]++;
         FireResult result = shoot.Shoot(coord);
-        if (!ingame[0]) {
-            System.out.println(String.format("The game has ended %s won", yourboard.size() > 0 ? "you" : "opponent"));
-        }
-
     }
 }

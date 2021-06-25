@@ -46,7 +46,7 @@ public class MyServer {
                 generatcatHtml(exchange, 404);
                 return;
             }
-            handler.FireHandler(exchange);
+            handler.FireHandler(exchange,false);
         }
     };
 

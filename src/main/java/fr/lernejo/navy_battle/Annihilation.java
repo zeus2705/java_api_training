@@ -29,7 +29,7 @@ public class Annihilation {
 
     public Game.FireResult Shoot(int[] coord) {
         String cell = String.format("%s%s", (char) (coord[1] + 'A'), coord[0] + 1);
-        if (game.ingame[0])
+        if (!game.ingame[0])
             return EndGame();
         try {
             String url = String.format("%s/api/game/fire?cell=%s", game.server.target[0], cell);

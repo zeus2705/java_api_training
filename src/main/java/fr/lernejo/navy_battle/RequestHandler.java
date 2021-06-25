@@ -31,13 +31,15 @@ public class RequestHandler {
         return buf.toString();
     }
 
-    public void FireHandler(HttpExchange exchange) throws IOException {
+    public void FireHandler(HttpExchange exchange, boolean test) throws IOException {
         String cell = "";
         try {
             cell = (String) exchange.getRequestURI().getQuery().split("cell=")[1];
             Game.FireResult f = server.game.ShotAt(cell);
-            String bodyresponse = String.format("{\"consequence\": \"%s\",\"shipLeft\": %s}", f.toString(), server.game.yourboard.size() > 0);
+            String bodyresponse = String.format("{\"consequence\": \"%s\",\"shipLeft\": %s}", f.toString(), (server.game.yourboard.size() > 0) && (server.game.ingame[0]));
             exchange.sendResponseHeaders(202, bodyresponse.length());
+            if (test)
+                exchange.getResponseHeaders().add("Content-Type", "application/json");
             try (
                 OutputStream os = exchange.getResponseBody()) { // (1)
                 os.write(bodyresponse.getBytes());
