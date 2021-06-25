@@ -16,7 +16,7 @@ public class Game {
     final MyServer server;
     final Annihilation shoot;
 
-    private Pattern p = Pattern.compile("^[A-J](10|[1-9])$");
+    final Pattern p = Pattern.compile("^[A-J](10|[1-9])$");
 
     enum FireResult {miss,hit,sunk,out}
 
@@ -46,15 +46,11 @@ public class Game {
     }
 
     public void FireBack() {
-        if (!ingame[0]) {
-            System.out.println(String.format("The game has ended %s won", yourboard.size() > 0 ? "you" : "opponent"));
-            return;
-        }
         int[] coord = shoot.GetCellToShoot();
         FireResult result = shoot.Shoot(coord);
         if (!ingame[0]) {
-            System.out.println(
-                String.format("The game has ended %s won", yourboard.size() > 0 ? "you" : "opponent"));
+            System.out.println(String.format("The game has ended %s won", yourboard.size() > 0 ? "you" : "opponent"));
         }
+
     }
 }

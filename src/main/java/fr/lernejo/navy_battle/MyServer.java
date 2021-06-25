@@ -53,7 +53,7 @@ public class MyServer {
     final HttpHandler StartRespond = new HttpHandler() {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            if (!exchange.getRequestMethod().equals("POST")) {
+            if (!exchange.getRequestMethod().equals("POST") && !game.ingame[0]) {
                 generatcatHtml(exchange, 404);
                 return;
             }

@@ -22,13 +22,11 @@ public class JSON_Check {
 
     public Game.FireResult ValidateFireRequest(String Request, Game g)
     {
-        try {
-            JSONObject obj = new JSONObject(Request);
-            firerequestschema.validate(obj);
-            if (!(boolean) obj.get("shipLeft")) {
-                g.ingame[0] = false;
-            }
-            return (Game.FireResult.valueOf((String)obj.get("consequence")));
-        } catch (org.json.JSONException e) {e.printStackTrace();return  Game.FireResult.out;}
+        JSONObject obj = new JSONObject(Request);
+        firerequestschema.validate(obj);
+        if (!(boolean) obj.get("shipLeft")) {
+            g.ingame[0] = false;
+        }
+        return (Game.FireResult.valueOf((String)obj.get("consequence")));
     }
 }

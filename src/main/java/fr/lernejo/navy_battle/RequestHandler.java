@@ -36,15 +36,13 @@ public class RequestHandler {
         try {
             cell = (String) exchange.getRequestURI().getQuery().split("cell=")[1];
             Game.FireResult f = server.game.ShotAt(cell);
-            if (f == Game.FireResult.out){throw new Exception();}
             String bodyresponse = String.format("{\"consequence\": \"%s\",\"shipLeft\": %s}", f.toString(), server.game.yourboard.size() > 0);
             exchange.sendResponseHeaders(202, bodyresponse.length());
             try (
                 OutputStream os = exchange.getResponseBody()) { // (1)
                 os.write(bodyresponse.getBytes());
             }
-            if (!server.game.ingame[0]) {System.out.println(String.format("The game has ended %s won", server.game.yourboard.size() > 0 ? "you" : "opponent"));}
-            else {server.game.FireBack();}
+            server.game.FireBack();
         }
         catch (Exception e) {server.generatcatHtml(exchange, 400);}
     }
@@ -53,7 +51,6 @@ public class RequestHandler {
         try {
             String body = GetBodyRequest(exchange);
             String serverurl = jsck.ValidateStartRequest(body);
-            if (server.game.ingame[0]) {throw new Exception();}
             server.target[0] = serverurl;
         } catch (Exception e) { server.generatcatHtml(exchange, 400); }
         String bodyresponse = String.format("{\"id\": \"%s\",\"url\": \"%s\",\"message\": \"%s\"}", server.serverID, server.url, "Cat will prevail");

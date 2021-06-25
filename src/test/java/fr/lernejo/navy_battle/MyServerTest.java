@@ -83,6 +83,34 @@ class MyServerTest {
         try {
             HttpClient cli =HttpClient.newHttpClient();
             HttpRequest requetePost = HttpRequest.newBuilder()
+                .uri(new URI("http://localhost:9878/api/game/fire"))
+                .setHeader("Accept", "application/json")
+                .setHeader("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString("Ping"))
+                .build();
+            HttpResponse<String> response = cli.send(requetePost, HttpResponse.BodyHandlers.ofString());
+            Assertions.assertEquals(404,response.statusCode(),"Status code 404 was expected for a POST on /yolo");
+        } catch (URISyntaxException | InterruptedException | IOException e) {
+            Assertions.assertEquals(0,1,"Number of exception");
+        }
+
+        try {
+            HttpClient cli =HttpClient.newHttpClient();
+            HttpRequest requeteget = HttpRequest.newBuilder()
+                .uri(new URI("http://localhost:9878/api/game/fire"))
+                .setHeader("Accept", "application/json")
+                .setHeader("Content-Type", "application/json")
+                .GET()
+                .build();
+            HttpResponse<String> response = cli.send(requeteget, HttpResponse.BodyHandlers.ofString());
+            Assertions.assertEquals(404,response.statusCode(),"Status code 404 was expected for a POST on /yolo");
+        } catch (URISyntaxException | InterruptedException | IOException e) {
+            Assertions.assertEquals(0,1,"Number of exception");
+        }
+
+        try {
+            HttpClient cli =HttpClient.newHttpClient();
+            HttpRequest requetePost = HttpRequest.newBuilder()
                 .uri(new URI("http://localhost:9878/api/game/start"))
                 .setHeader("Accept", "application/json")
                 .setHeader("Content-Type", "application/json")

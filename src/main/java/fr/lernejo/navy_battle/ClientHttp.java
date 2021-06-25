@@ -25,9 +25,7 @@ public class ClientHttp {
     public boolean ConnectToServer() throws URISyntaxException, IOException, InterruptedException {
         try {
             HttpClient cli =HttpClient.newHttpClient();
-            HttpRequest requetePost = HttpRequest.newBuilder()
-                .uri(new URI(url + "/api/game/start"))
-                .setHeader("Accept", "application/json")
+            HttpRequest requetePost = HttpRequest.newBuilder().uri(new URI(url + "/api/game/start")).setHeader("Accept", "application/json")
                 .setHeader("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(String.format("{\"id\": \"%s\",\"url\": \"%s\",\"message\": \"%s\"}",server.serverID,server.url,"I love cat and u ?")))
                 .build();
@@ -36,9 +34,7 @@ public class ClientHttp {
                 server.target[0] = url;
                 server.game.ingame[0] = true;
             }
-        } catch (URISyntaxException | InterruptedException | IOException e) {
-            throw e;
-        }
+        } catch (URISyntaxException | InterruptedException | IOException e) {throw e;}
         return true;
     }
 

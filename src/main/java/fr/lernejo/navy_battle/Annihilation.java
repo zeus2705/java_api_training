@@ -30,10 +30,10 @@ public class Annihilation {
     public Game.FireResult Shoot(int[] coord) {
         String cell = String.format("%s%s", (char) (coord[1] + 'A'), coord[0] + 1);
         try {
-            String url = String.format("%s/api/game/fire*?cell=%s", game.server.target[0], cell);
+            String url = String.format("%s/api/game/fire?cell=%s", game.server.target[0], cell);
             HttpClient cli = HttpClient.newHttpClient();
             HttpRequest requetefire = HttpRequest.newBuilder()
-                .uri(new URI(url)).setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET()
+                .uri(new URI(url)).setHeader("Content-Type", "application/json").setHeader("Content-Type", "application/json").GET()
                 .build();
             HttpResponse<String> response = cli.send(requetefire, HttpResponse.BodyHandlers.ofString());
             if (response.body().contains("src=\"https://http.cat/404\""))
@@ -44,7 +44,6 @@ public class Annihilation {
 
     public Game.FireResult  EndGame(){
         game.ingame[0] = false;
-        System.out.println(String.format("The game has ended %s won", game.yourboard.size() > 0 ? "you" : "opponent"));
         return Game.FireResult.miss;
     }
 }
