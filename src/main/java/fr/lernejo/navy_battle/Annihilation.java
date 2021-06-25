@@ -33,7 +33,7 @@ public class Annihilation {
             String url = String.format("%s/api/game/fire?cell=%s", game.server.target[0], cell);
             HttpClient cli = HttpClient.newHttpClient();
             HttpRequest requetefire = HttpRequest.newBuilder()
-                .uri(new URI(url)).setHeader("Content-Type", "application/json").setHeader("Content-Type", "application/json").GET()
+                .uri(new URI(url)).setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET()
                 .build();
             HttpResponse<String> response = cli.send(requetefire, HttpResponse.BodyHandlers.ofString());
             if (response.body().contains("src=\"https://http.cat/404\""))

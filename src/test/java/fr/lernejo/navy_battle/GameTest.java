@@ -35,9 +35,9 @@ class GameTest {
         while (b < 100) {
             int[] coord = g.yourboard.get(0).get(0);
             if (g.yourboard.get(0).size() == 1)
-                Assertions.assertEquals(Game.FireResult.sunk, g.ShotAt(String.format("%s%s", (char) (coord[1] + 'A'), coord[0])), "Shot is a sunk");
+                Assertions.assertEquals(Game.FireResult.sunk, g.ShotAt(String.format("%s%s", (char) (coord[1] + 'A'), coord[0] + 1)), "Shot is a sunk");
             else
-                Assertions.assertEquals(Game.FireResult.hit, g.ShotAt(String.format("%s%s", (char) (coord[1] + 'A'), coord[0])), "Shot is a hit");
+                Assertions.assertEquals(Game.FireResult.hit, g.ShotAt(String.format("%s%s", (char) (coord[1] + 'A'), coord[0] + 1)), "Shot is a hit");
             if (g.yourboard.size() == 0)
                 break;
             b++;
@@ -46,7 +46,7 @@ class GameTest {
         {
             for (int y = 0; y < 10; y++)
             {
-                Assertions.assertEquals(Game.FireResult.miss, g.ShotAt(String.format("%s%s", (char) (y + 'A'), x)), "Shot is a miss");
+                Assertions.assertEquals(Game.FireResult.miss, g.ShotAt(String.format("%s%s", (char) (y + 'A'), x )), "Shot is a miss");
             }
         }
     }

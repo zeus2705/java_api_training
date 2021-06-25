@@ -57,7 +57,7 @@ public class MyServer {
                 generatcatHtml(exchange, 404);
                 return;
             }
-            try {handler.StartHandler(exchange);} catch (InterruptedException e) {e.printStackTrace();}
+            try {handler.StartHandler(exchange,false);} catch (InterruptedException e) {e.printStackTrace();}
         }
     };
 

@@ -116,7 +116,7 @@ class RequestHandlerTest {
         };
         RequestHandler handler = new RequestHandler(s);
         try {
-            handler.StartHandler(exchange);
+            handler.StartHandler(exchange,true);
         } catch (IOException | InterruptedException e) {
             Assertions.assertEquals(0,1,"Number of exception on request");
         }
@@ -225,7 +225,7 @@ class RequestHandlerTest {
         };
         RequestHandler handler = new RequestHandler(s);
         try {
-            handler.StartHandler(exchange);
+            handler.StartHandler(exchange,true);
         } catch (IOException | InterruptedException e) {
             Assertions.assertEquals(0,1,"Number of exception on request");
         }

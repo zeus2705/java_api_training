@@ -47,7 +47,7 @@ public class RequestHandler {
         catch (Exception e) {server.generatcatHtml(exchange, 400);}
     }
 
-    public void StartHandler(HttpExchange exchange) throws IOException, InterruptedException {
+    public void StartHandler(HttpExchange exchange, boolean test) throws IOException, InterruptedException {
         try {
             String body = GetBodyRequest(exchange);
             String serverurl = jsck.ValidateStartRequest(body);
@@ -55,6 +55,8 @@ public class RequestHandler {
         } catch (Exception e) { server.generatcatHtml(exchange, 400); }
         String bodyresponse = String.format("{\"id\": \"%s\",\"url\": \"%s\",\"message\": \"%s\"}", server.serverID, server.url, "Cat will prevail");
         exchange.sendResponseHeaders(202, bodyresponse.length());
+        if (!test)
+            exchange.getResponseHeaders().add("Content-Type", "application/json");
         try (
             OutputStream os = exchange.getResponseBody()) { // (1)
             os.write(bodyresponse.getBytes());

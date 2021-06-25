@@ -31,8 +31,8 @@ public class Game {
 
     public FireResult ShotAt(String cell) throws IOException {
         if (!p.matcher(cell).find()) {return FireResult.out; }
-        int y = (cell.charAt(0)- 'A');
-        int x = Integer.parseInt(cell.split("[A-J]")[1]);
+        int y = (cell.charAt(0) - 'A');
+        int x = Integer.parseInt(cell.split("[A-J]")[1]) - 1;
         for (List<int[]> coordship : yourboard) {for (int[] coord : coordship) {
             if (coord[0] == x && coord[1] == y){
                 coordship.remove(coord);
@@ -47,6 +47,7 @@ public class Game {
 
     public void FireBack() {
         int[] coord = shoot.GetCellToShoot();
+        coord[0]++;
         FireResult result = shoot.Shoot(coord);
         if (!ingame[0]) {
             System.out.println(String.format("The game has ended %s won", yourboard.size() > 0 ? "you" : "opponent"));
