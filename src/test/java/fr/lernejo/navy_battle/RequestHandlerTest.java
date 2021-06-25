@@ -116,8 +116,8 @@ class RequestHandlerTest {
         };
         RequestHandler handler = new RequestHandler(s);
         try {
-            Assertions.assertEquals(true,handler.StartHandler(exchange).length() > 2, "Expected a bigger body from the request");
-        } catch (IOException e) {
+            handler.StartHandler(exchange);
+        } catch (IOException | InterruptedException e) {
             Assertions.assertEquals(0,1,"Number of exception on request");
         }
         MyServerTest.DestroyTestServer(s);
@@ -225,8 +225,8 @@ class RequestHandlerTest {
         };
         RequestHandler handler = new RequestHandler(s);
         try {
-            Assertions.assertEquals(0,handler.StartHandler(exchange).length(), "Expected no body from the request");
-        } catch (IOException e) {
+            handler.StartHandler(exchange);
+        } catch (IOException | InterruptedException e) {
             Assertions.assertEquals(0,1,"Number of exception on request");
         }
         MyServerTest.DestroyTestServer(s);

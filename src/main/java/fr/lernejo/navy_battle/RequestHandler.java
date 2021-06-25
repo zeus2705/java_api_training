@@ -28,25 +28,41 @@ public class RequestHandler {
         }
         br.close();
         isr.close();
-        System.out.println(buf.toString());
         return buf.toString();
     }
 
-    public String StartHandler(HttpExchange exchange) throws IOException {
+    public void FireHandler(HttpExchange exchange) throws IOException {
+        String cell = "";
+        try {
+            cell = (String) exchange.getRequestURI().getQuery().split("cell=")[1];
+            Game.FireResult f = server.game.ShotAt(cell);
+            if (f == Game.FireResult.out){throw new Exception();}
+            String bodyresponse = String.format("{\"consequence\": \"%s\",\"shipLeft\": %s}", f.toString(), server.game.yourboard.size() > 0);
+            exchange.sendResponseHeaders(202, bodyresponse.length());
+            try (
+                OutputStream os = exchange.getResponseBody()) { // (1)
+                os.write(bodyresponse.getBytes());
+            }
+            if (!server.game.ingame[0]) {System.out.println(String.format("The game has ended %s won", server.game.yourboard.size() > 0 ? "you" : "opponent"));}
+            else {server.game.FireBack();}
+        }
+        catch (Exception e) {server.generatcatHtml(exchange, 400);}
+    }
+
+    public void StartHandler(HttpExchange exchange) throws IOException, InterruptedException {
         try {
             String body = GetBodyRequest(exchange);
-            jsck.ValidateStartRequest(body);
-        } catch (Exception e) {
-            server.generatcatHtml(exchange, 400);
-            return "";
-        }
+            String serverurl = jsck.ValidateStartRequest(body);
+            if (server.game.ingame[0]) {throw new Exception();}
+            server.target[0] = serverurl;
+        } catch (Exception e) { server.generatcatHtml(exchange, 400); }
         String bodyresponse = String.format("{\"id\": \"%s\",\"url\": \"%s\",\"message\": \"%s\"}", server.serverID, server.url, "Cat will prevail");
-        System.out.println(bodyresponse);
         exchange.sendResponseHeaders(202, bodyresponse.length());
         try (
             OutputStream os = exchange.getResponseBody()) { // (1)
             os.write(bodyresponse.getBytes());
         }
-        return bodyresponse;
+        server.game.ingame[0] = true;
+        server.game.FireBack();
     }
 }

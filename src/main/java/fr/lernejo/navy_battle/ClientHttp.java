@@ -32,6 +32,10 @@ public class ClientHttp {
                 .POST(HttpRequest.BodyPublishers.ofString(String.format("{\"id\": \"%s\",\"url\": \"%s\",\"message\": \"%s\"}",server.serverID,server.url,"I love cat and u ?")))
                 .build();
             HttpResponse<String> response = cli.send(requetePost, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 202) {
+                server.target[0] = url;
+                server.game.ingame[0] = true;
+            }
         } catch (URISyntaxException | InterruptedException | IOException e) {
             throw e;
         }

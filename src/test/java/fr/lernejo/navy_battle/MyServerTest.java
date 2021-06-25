@@ -44,7 +44,7 @@ class MyServerTest {
         try {
             HttpClient cli =HttpClient.newHttpClient();
             HttpRequest requetePost = HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:9876/ping"))
+                .uri(new URI("http://localhost:9877/ping"))
                 .setHeader("Accept", "application/json")
                 .setHeader("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString("Ping"))
@@ -69,7 +69,7 @@ class MyServerTest {
         try {
             HttpClient cli =HttpClient.newHttpClient();
             HttpRequest requetePost = HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:9876/yolo"))
+                .uri(new URI("http://localhost:9878/yolo"))
                 .setHeader("Accept", "application/json")
                 .setHeader("Content-Type", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString("Ping"))
@@ -83,7 +83,7 @@ class MyServerTest {
         try {
             HttpClient cli =HttpClient.newHttpClient();
             HttpRequest requetePost = HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:9876/api/game/start"))
+                .uri(new URI("http://localhost:9878/api/game/start"))
                 .setHeader("Accept", "application/json")
                 .setHeader("Content-Type", "application/json")
                 .GET()

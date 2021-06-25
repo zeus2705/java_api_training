@@ -21,13 +21,13 @@ public class MyServer {
     final HttpServer server;
     final String serverID;
     final RequestHandler handler;
+    final Game game;
+    final String[] target;
 
      void generatcatHtml(HttpExchange exchange, int error) throws IOException {
         String body = String.format("<img class=\"fit-picture\" src=\"https://http.cat/%s\">", error);
         exchange.sendResponseHeaders(error, body.length());
-        try (OutputStream os = exchange.getResponseBody()) { // (1)
-            os.write(body.getBytes());
-        }
+        try (OutputStream os = exchange.getResponseBody()) {os.write(body.getBytes());}
     }
 
     final HttpHandler PingRespond = new HttpHandler() {
@@ -35,9 +35,18 @@ public class MyServer {
         public void handle(HttpExchange exchange) throws IOException {
             String body = String.format("OK");
             exchange.sendResponseHeaders(200, body.length());
-            try (OutputStream os = exchange.getResponseBody()) { // (1)
-                os.write(body.getBytes());
+            try (OutputStream os = exchange.getResponseBody()) {os.write(body.getBytes());}
+        }
+    };
+
+    final HttpHandler FireRespond = new HttpHandler() {
+        @Override
+        public void handle(HttpExchange exchange) throws IOException {
+            if (!exchange.getRequestMethod().equals("GET") || !game.ingame[0]) {
+                generatcatHtml(exchange, 404);
+                return;
             }
+            handler.FireHandler(exchange);
         }
     };
 
@@ -48,7 +57,7 @@ public class MyServer {
                 generatcatHtml(exchange, 404);
                 return;
             }
-            handler.StartHandler(exchange);
+            try {handler.StartHandler(exchange);} catch (InterruptedException e) {e.printStackTrace();}
         }
     };
 
@@ -67,10 +76,13 @@ public class MyServer {
         server.setExecutor(singlethread);
         server.createContext("/ping",this.PingRespond);
         server.createContext("/api/game/start",this.StartRespond);
+        server.createContext("/api/game/fire",this.FireRespond);
         server.createContext("/",this.DefaultRespond);
         this.serverID = UUID.randomUUID().toString();
         handler = new RequestHandler(this);
         server.start();
         System.out.println(String.format("Server started on port %s",port));
+        game = new Game(this);
+        target = new String[]{""};
     }
 }

@@ -20,6 +20,7 @@ class LauncherTest {
 
             Launcher.main(arg);
         }catch (IOException | InterruptedException | URISyntaxException e) {
+            e.printStackTrace();
             Assertions.assertEquals(0,1,"Number of exception");
         }
         Assertions.assertEquals(0,0,"Number of exception");
