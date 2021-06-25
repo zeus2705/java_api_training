@@ -29,6 +29,8 @@ public class Annihilation {
 
     public Game.FireResult Shoot(int[] coord) {
         String cell = String.format("%s%s", (char) (coord[1] + 'A'), coord[0] + 1);
+        if (game.ingame[0])
+            return EndGame();
         try {
             String url = String.format("%s/api/game/fire?cell=%s", game.server.target[0], cell);
             HttpClient cli = HttpClient.newHttpClient();
@@ -36,14 +38,12 @@ public class Annihilation {
                 .uri(new URI(url)).setHeader("Accept", "application/json").setHeader("Content-Type", "application/json").GET()
                 .build();
             HttpResponse<String> response = cli.send(requetefire, HttpResponse.BodyHandlers.ofString());
-            if (response.body().contains("src=\"https://http.cat/404\""))
-                return  EndGame();
             return game.server.handler.jsck.ValidateFireRequest(response.body(), game);
         } catch (Exception e) {return Game.FireResult.out; }
     }
 
     public Game.FireResult  EndGame(){
         game.ingame[0] = false;
-        return Game.FireResult.miss;
+        return Game.FireResult.out;
     }
 }

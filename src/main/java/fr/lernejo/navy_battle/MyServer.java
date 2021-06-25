@@ -42,7 +42,7 @@ public class MyServer {
     final HttpHandler FireRespond = new HttpHandler() {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            if (!exchange.getRequestMethod().equals("GET") || !game.ingame[0]) {
+            if (!exchange.getRequestMethod().equals("GET")) {
                 generatcatHtml(exchange, 404);
                 return;
             }
@@ -53,7 +53,7 @@ public class MyServer {
     final HttpHandler StartRespond = new HttpHandler() {
         @Override
         public void handle(HttpExchange exchange) throws IOException {
-            if (!exchange.getRequestMethod().equals("POST") && !game.ingame[0]) {
+            if (game.ingame[0] || !exchange.getRequestMethod().equals("POST")) {
                 generatcatHtml(exchange, 404);
                 return;
             }

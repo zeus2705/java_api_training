@@ -24,7 +24,7 @@ class GameTest {
     @Test
     void Fireback() throws IOException {
         MyServer s = new MyServer("1235");
-        Game g = new Game(null);
+        Game g = new Game(s);
         g.FireBack();
     }
     @Test
@@ -46,7 +46,7 @@ class GameTest {
         {
             for (int y = 0; y < 10; y++)
             {
-                Assertions.assertEquals(Game.FireResult.miss, g.ShotAt(String.format("%s%s", (char) (y + 'A'), x )), "Shot is a miss");
+            Assertions.assertEquals(Game.FireResult.miss, g.ShotAt(String.format("%s%s", (char) (y + 'A'), x )), "Shot is a miss");
             }
         }
     }
