@@ -37,9 +37,9 @@ public class RequestHandler {
             cell = (String) exchange.getRequestURI().getQuery().split("cell=")[1];
             Game.FireResult f = server.game.ShotAt(cell);
             String bodyresponse = String.format("{\"consequence\": \"%s\",\"shipLeft\": %s}", f.toString(), (server.game.yourboard.size() > 0) && (server.game.ingame[0]));
-            exchange.sendResponseHeaders(202, bodyresponse.length());
-            if (test)
+            if (!test)
                 exchange.getResponseHeaders().add("Content-Type", "application/json");
+            exchange.sendResponseHeaders(202, bodyresponse.length());
             try (
                 OutputStream os = exchange.getResponseBody()) { // (1)
                 os.write(bodyresponse.getBytes());
