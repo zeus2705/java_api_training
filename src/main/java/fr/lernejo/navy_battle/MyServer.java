@@ -81,7 +81,6 @@ public class MyServer {
         this.serverID = UUID.randomUUID().toString();
         handler = new RequestHandler(this);
         server.start();
-        System.out.println(String.format("Server started on port %s",port));
         game = new Game(this);
         target = new String[]{""};
     }
